@@ -2,6 +2,7 @@ package com.growerportal.GrowerPortal.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -9,15 +10,18 @@ import java.util.Date;
 @Entity
 public class PasswordResetToken {
 
-    private static final int EXPIRATION = 15; // 15 minutes
+    private static final int EXPIRATION = 3; // 15 minutes
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
+    @Setter
     private String otp;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Setter
     private Date expiryDate;
 
     @Getter
@@ -33,7 +37,7 @@ public class PasswordResetToken {
         this.expiryDate = calculateExpiryDate();
     }
 
-    private Date calculateExpiryDate() {
+    public Date calculateExpiryDate() {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(new Date().getTime());
         cal.add(Calendar.MINUTE, PasswordResetToken.EXPIRATION);

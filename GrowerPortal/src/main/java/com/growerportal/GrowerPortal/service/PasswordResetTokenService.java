@@ -15,20 +15,27 @@ public class PasswordResetTokenService {
     @Autowired
     private PasswordResetTokenRepository tokenRepository;
 
-    public PasswordResetToken createPasswordResetTokenForUser(User user) {
+    public String createOrUpdatePasswordResetTokenForUser(User user) {
         String otp = SecurityUtility.generateOtp();
-        PasswordResetToken resetToken = new PasswordResetToken(otp, user);
-        return tokenRepository.save(resetToken);
+        PasswordResetToken existingToken = tokenRepository.findByUser(user);
+        if (existingToken != null) {
+            existingToken.setOtp(otp);
+            existingToken.setExpiryDate(existingToken.calculateExpiryDate());
+            tokenRepository.save(existingToken);
+        } else {
+            PasswordResetToken newToken = new PasswordResetToken(otp, user);
+            tokenRepository.save(newToken);
+        }
+        return otp;
     }
 
     public Optional<User> validateOtp(String otp) {
         PasswordResetToken resetToken = tokenRepository.findByOtp(otp);
         if (resetToken == null || resetToken.isExpired()) {
-            return Optional.empty(); // Returns an empty Optional to indicate no valid user was found
+            return Optional.empty();
         }
-        return Optional.of(resetToken.getUser()); // Returns the user associated with the valid OTP
+        return Optional.of(resetToken.getUser());
     }
 
-    // Other methods...
+    // Additional methods as needed...
 }
-

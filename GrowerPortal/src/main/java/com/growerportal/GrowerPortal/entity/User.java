@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Setter;
 
 
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,6 +12,7 @@ public class User {
     private String email;
     // Constructors, getters, and setters...
     @Setter
+    @Column(length = 255)
     private String password;
 
 }

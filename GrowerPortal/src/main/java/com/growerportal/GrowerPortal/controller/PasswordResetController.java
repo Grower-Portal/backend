@@ -36,7 +36,7 @@ public class PasswordResetController {
         }
 
         User user = userOptional.get();
-        String otp = tokenService.createPasswordResetTokenForUser(user).toString();
+        String otp = tokenService.createOrUpdatePasswordResetTokenForUser(user).toString();
 
         emailService.sendOtpEmail(email, "Password Reset OTP", otp);
         return ResponseEntity.ok().body("OTP sent to email");
@@ -67,6 +67,6 @@ public class PasswordResetController {
     private boolean isValidPassword(String password) {
         // Implement your password policy here
         // Example: check password length, uppercase, lowercase, numbers, symbols, etc.
-        return password.length() >= 8; // Simple length check example
+        return password.length() >= 5; // Simple length check example
     }
 }
