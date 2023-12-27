@@ -7,6 +7,7 @@ import com.growerportal.GrowerPortal.repository.FarmerPersonalInfoRepository;
 import com.growerportal.GrowerPortal.repository.VerificationTokenRepository;
 import com.growerportal.GrowerPortal.service.FarmerSignupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -19,10 +20,13 @@ public class FarmerSignupServiceImpl implements FarmerSignupService {
     private final FarmerPersonalInfoRepository farmerRepository;
     private final VerificationTokenRepository verificationTokenRepository;
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
-    public FarmerSignupServiceImpl(FarmerPersonalInfoRepository farmerRepository, VerificationTokenRepository verificationTokenRepository) {
+    public FarmerSignupServiceImpl(FarmerPersonalInfoRepository farmerRepository, VerificationTokenRepository verificationTokenRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.farmerRepository = farmerRepository;
         this.verificationTokenRepository = verificationTokenRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public FarmerPersonalInfo register(FarmerSignupDto signupDto) {
@@ -31,6 +35,8 @@ public class FarmerSignupServiceImpl implements FarmerSignupService {
         farmer.setLastName(signupDto.getLastName());
         farmer.setDob(signupDto.getDateOfBirth());
         farmer.setUsername(signupDto.getUsername());
+        String encryptedPassword = bCryptPasswordEncoder.encode(signupDto.getPassword());
+        signupDto.setPassword(encryptedPassword);
         farmer.setPassword(signupDto.getPassword());
         farmer.setEmail(signupDto.getEmail());
         farmer.setAddress(signupDto.getAddress());
@@ -56,7 +62,6 @@ public class FarmerSignupServiceImpl implements FarmerSignupService {
         return false;
 
     }
-
 
     public void saveFarmer(FarmerPersonalInfo farmer) {
         farmerRepository.save(farmer);
