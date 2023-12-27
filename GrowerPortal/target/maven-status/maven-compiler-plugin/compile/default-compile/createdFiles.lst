@@ -1,5 +1,6 @@
 com/growerportal/GrowerPortal/Dto/FarmerSignupDto.class
 com/growerportal/GrowerPortal/config/SpringdocConfig.class
+com/growerportal/GrowerPortal/config/SecurityConfig.class
 com/growerportal/GrowerPortal/service/FarmerSignupService.class
 com/growerportal/GrowerPortal/service/impl/FarmerSignupServiceImpl.class
 com/growerportal/GrowerPortal/entity/VerificationToken$VerificationTokenBuilder.class

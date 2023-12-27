@@ -19,7 +19,6 @@ public class FarmerSignupServiceImpl implements FarmerSignupService {
 
     private final FarmerPersonalInfoRepository farmerRepository;
     private final VerificationTokenRepository verificationTokenRepository;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
