@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -56,6 +57,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
 
+
     public void sendEmail(String to, String subject, String htmlContent) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -70,15 +72,19 @@ public class EmailServiceImpl implements EmailService {
     }
 
 
-    public void notifySrTeam(String name, String email, String date) {
-        String subject = "New Form Submission Received";
+    @Override
+    public void notifySrTeam(String name, String email) {
+        String subject = "New Application Submission Received";
         Resource resource = resourceLoader.getResource("classpath:templates/notify-sr-email.html");
         String htmlContent;
         try {
             htmlContent = new String(Files.readAllBytes(Paths.get(resource.getURI())), StandardCharsets.UTF_8);
-            htmlContent = htmlContent.replace("[Name]", name)
-                    .replace("[Email]", email)
-                    .replace("[Date]", date);
+            htmlContent = htmlContent
+
+                    //Uncomment after frontend gives user current session details
+//                    .replace("[Name]", name)
+//                    .replace("[Email]", email)
+                    .replace("[Date]", LocalDate.now().toString());
             sendEmail(Arrays.toString(recipients), subject, htmlContent);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load email template: " + e.getMessage());
