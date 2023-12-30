@@ -24,15 +24,15 @@ public class EmailService {
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
 
-    void sendVerificationEmail(String farmerEmail, String otp) {
+    public void sendVerificationEmail(String farmerEmail, String otp) {
 
     }
 
-    String generateOtp() {
+    public String generateOtp() {
         return null;
     }
 
-    void notifySrTeam(String name, String email) {
+    public void notifySrTeam(String name, String email) {
 
     }
 
