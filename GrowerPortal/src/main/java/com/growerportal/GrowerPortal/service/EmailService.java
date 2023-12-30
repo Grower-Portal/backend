@@ -23,6 +23,19 @@ public class EmailService {
     private TemplateEngine templateEngine; // Autowire the Thymeleaf template engine
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
+
+    void sendVerificationEmail(String farmerEmail, String otp) {
+
+    }
+
+    String generateOtp() {
+        return null;
+    }
+
+    void notifySrTeam(String name, String email) {
+
+    }
+
     public void sendOtpEmail(String to, String subject, String otp) {
         try {
             MimeMessage message = emailSender.createMimeMessage();

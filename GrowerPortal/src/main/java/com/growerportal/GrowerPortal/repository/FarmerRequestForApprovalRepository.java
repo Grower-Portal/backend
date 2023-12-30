@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FarmerRequestForApprovalRepository extends JpaRepository<FarmerRequestForApproval, Long> {
-    // Custom methods, if needed
+
 }

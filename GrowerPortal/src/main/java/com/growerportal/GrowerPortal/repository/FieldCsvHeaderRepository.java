@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FieldCsvHeaderRepository extends JpaRepository<FarmerPersonalInfo, Long> {
-    // You can define custom query methods here, if needed
+
 }

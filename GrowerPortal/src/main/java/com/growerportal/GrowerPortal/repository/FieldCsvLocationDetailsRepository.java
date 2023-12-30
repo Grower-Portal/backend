@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FieldCsvLocationDetailsRepository extends JpaRepository<FarmerRequestForApproval, Long> {
-    // Custom methods, if needed
+
 }
