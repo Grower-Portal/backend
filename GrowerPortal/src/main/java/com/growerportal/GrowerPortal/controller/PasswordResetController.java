@@ -36,7 +36,7 @@ public class PasswordResetController {
         }
 
         User user = userOptional.get();
-        String otp = tokenService.createOrUpdatePasswordResetTokenForUser(user).toString();
+        String otp = tokenService.createOrUpdatePasswordResetTokenForUser(user);
 
         emailService.sendOtpEmail(email, "Password Reset OTP", otp);
         return ResponseEntity.ok().body("OTP sent to email");
