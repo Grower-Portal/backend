@@ -2,6 +2,7 @@ package com.growerportal.GrowerPortal.controller;
 
 import com.growerportal.GrowerPortal.Dto.FarmerSignupDto;
 import com.growerportal.GrowerPortal.entity.FarmerPersonalInfo;
+import com.growerportal.GrowerPortal.entity.Roles;
 import com.growerportal.GrowerPortal.service.EmailService;
 import com.growerportal.GrowerPortal.service.FarmerSignupService;
 import com.growerportal.GrowerPortal.service.impl.EmailServiceImpl;
@@ -9,6 +10,10 @@ import com.growerportal.GrowerPortal.service.impl.FarmerSignupServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.management.relation.Role;
+import java.util.HashSet;
+import java.util.Set;
 // Other imports
 
 @RestController
@@ -18,6 +23,7 @@ public class FarmerSignUpController {
 
     private final FarmerSignupService signupService;
     private final EmailService emailServiceImpl;
+
 
     public FarmerSignUpController(FarmerSignupServiceImpl signupService, EmailServiceImpl emailServiceImpl) {
         this.signupService = signupService;
@@ -46,6 +52,7 @@ public class FarmerSignUpController {
         if (farmer == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed");
         }
+
 
         // Save farmer to database
         signupService.saveFarmer(farmer);
