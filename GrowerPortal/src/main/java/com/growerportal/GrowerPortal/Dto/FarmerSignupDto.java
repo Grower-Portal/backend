@@ -11,11 +11,13 @@ import java.util.Date;
 @AllArgsConstructor
 public class FarmerSignupDto {
     private String firstName;
+    private String middleName;
     private String lastName;
+    private String suffix;
     private Date dateOfBirth; // Change this to String if you are parsing the date from a String
-    private String username;
+    private String email;
     private String password;
     private String confirmPassword;
-    private String email;
+    private String phoneNumber;
     private String address;
 }

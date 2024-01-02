@@ -22,9 +22,6 @@ public class FarmerPersonalInfo {
     private Long farmer_ID;
 
     @Column(nullable = false, unique = true)
-    private String username;
-
-    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -36,11 +33,20 @@ public class FarmerPersonalInfo {
     @Column(nullable = false)
     private String lastName;
 
+    @Column
+    private String middleName;
+
+    @Column
+    private String suffix;
+
     @Temporal(TemporalType.DATE)
     private Date dob;
 
     @Column(nullable = false)
     private String address;
+
+    @Column(nullable = false)
+    private String phoneNumber;
 
 
 }
