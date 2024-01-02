@@ -31,13 +31,15 @@ public class FarmerSignupServiceImpl implements FarmerSignupService {
     public FarmerPersonalInfo register(FarmerSignupDto signupDto) {
         FarmerPersonalInfo farmer = new FarmerPersonalInfo();
         farmer.setFirstName(signupDto.getFirstName());
+        farmer.setMiddleName(signupDto.getMiddleName());
         farmer.setLastName(signupDto.getLastName());
+        farmer.setSuffix(signupDto.getSuffix());
         farmer.setDob(signupDto.getDateOfBirth());
-        farmer.setUsername(signupDto.getUsername());
+        farmer.setEmail(signupDto.getEmail());
         String encryptedPassword = bCryptPasswordEncoder.encode(signupDto.getPassword());
         signupDto.setPassword(encryptedPassword);
         farmer.setPassword(signupDto.getPassword());
-        farmer.setEmail(signupDto.getEmail());
+        farmer.setPhoneNumber(signupDto.getPhoneNumber());
         farmer.setAddress(signupDto.getAddress());
 
         return farmerRepository.save(farmer);
