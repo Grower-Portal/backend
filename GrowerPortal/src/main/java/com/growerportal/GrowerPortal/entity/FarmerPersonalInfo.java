@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -41,6 +43,12 @@ public class FarmerPersonalInfo {
 
     @Column(nullable = false)
     private String address;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "tbl_user_roles",
+            joinColumns = @JoinColumn(name = "farmer_ID"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
+    private Set<Roles> roles = new HashSet<>();
 
 
 }
