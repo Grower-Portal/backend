@@ -25,8 +25,7 @@ public class FarmerServiceImpl implements FarmerService {
         UserInfoDto userInfoDTO = new UserInfoDto();
         userInfoDTO.setName(farmer.getFirstName() + " " + farmer.getLastName());
         userInfoDTO.setEmail(farmer.getEmail());
-        // Assume that phone is a new field in FarmerPersonalInfo and is populated
-//        userInfoDTO.setPhone(farmer.getPhone());
+        userInfoDTO.setPhone(farmer.getPhoneNumber());
         userInfoDTO.setAddress(farmer.getAddress());
         userInfoDTO.setDob(farmer.getDob());
 
