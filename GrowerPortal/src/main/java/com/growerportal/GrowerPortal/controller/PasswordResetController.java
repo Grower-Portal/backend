@@ -1,7 +1,7 @@
 package com.growerportal.GrowerPortal.controller;
 
 import com.growerportal.GrowerPortal.dto.PasswordDto;
-import com.growerportal.GrowerPortal.entity.User;
+import com.growerportal.GrowerPortal.entity.FarmerPersonalInfo;
 import com.growerportal.GrowerPortal.repository.UserRepository;
 import com.growerportal.GrowerPortal.service.EmailService;
 import com.growerportal.GrowerPortal.service.PasswordResetTokenService;
@@ -30,12 +30,12 @@ public class PasswordResetController {
 
     @PostMapping("/request-password-reset")
     public ResponseEntity<?> requestPasswordReset(@RequestParam("email") String email) {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(email));
+        Optional<FarmerPersonalInfo> userOptional = Optional.ofNullable(userRepository.findByEmail(email));
         if (userOptional.isEmpty()) {
             return ResponseEntity.badRequest().body("User with given email doesn't exist");
         }
 
-        User user = userOptional.get();
+        FarmerPersonalInfo user = userOptional.get();
         String otp = tokenService.createOrUpdatePasswordResetTokenForUser(user);
 
         emailService.sendOtpEmail(email, "Password Reset OTP", otp);
@@ -45,12 +45,12 @@ public class PasswordResetController {
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam("otp") String otp,
                                            @RequestBody PasswordDto passwordDto) {
-        Optional<User> userOptional = tokenService.validateOtp(otp);
+        Optional<FarmerPersonalInfo> userOptional = tokenService.validateOtp(otp);
         if (userOptional.isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid or expired OTP");
         }
 
-        User user = userOptional.get();
+        FarmerPersonalInfo user = userOptional.get();
 
         if (!isValidPassword(passwordDto.getNewPassword())) {
             return ResponseEntity.badRequest().body("Invalid password format");

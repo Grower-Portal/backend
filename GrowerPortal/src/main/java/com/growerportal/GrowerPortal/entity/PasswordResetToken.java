@@ -26,12 +26,12 @@ public class PasswordResetToken {
 
     @Getter
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
-    private User user;
+    @JoinColumn(nullable = false, name = "farmer_ID")
+    private FarmerPersonalInfo user;
 
     public PasswordResetToken() {}
 
-    public PasswordResetToken(String otp, User user) {
+    public PasswordResetToken(String otp, FarmerPersonalInfo user) {
         this.otp = otp;
         this.user = user;
         this.expiryDate = calculateExpiryDate();

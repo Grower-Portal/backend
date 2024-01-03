@@ -1,7 +1,7 @@
 package com.growerportal.GrowerPortal.service;
 
+import com.growerportal.GrowerPortal.entity.FarmerPersonalInfo;
 import com.growerportal.GrowerPortal.entity.PasswordResetToken;
-import com.growerportal.GrowerPortal.entity.User;
 import com.growerportal.GrowerPortal.repository.PasswordResetTokenRepository;
 import com.growerportal.GrowerPortal.util.SecurityUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class PasswordResetTokenService {
     @Autowired
     private PasswordResetTokenRepository tokenRepository;
 
-    public String createOrUpdatePasswordResetTokenForUser(User user) {
+    public String createOrUpdatePasswordResetTokenForUser(FarmerPersonalInfo user) {
         String otp = SecurityUtility.generateOtp();
         PasswordResetToken existingToken = tokenRepository.findByUser(user);
         if (existingToken != null) {
@@ -29,7 +29,7 @@ public class PasswordResetTokenService {
         return otp;
     }
 
-    public Optional<User> validateOtp(String otp) {
+    public Optional<FarmerPersonalInfo> validateOtp(String otp) {
         PasswordResetToken resetToken = tokenRepository.findByOtp(otp);
         if (resetToken == null || resetToken.isExpired()) {
             return Optional.empty();
