@@ -7,9 +7,11 @@ public interface FarmerSignupService {
 
     FarmerPersonalInfo register(FarmerSignupDto signupDto);
 
-    void saveOtpForEmail(String email, String otp);
+    void saveOrUpdateOtpForEmail(String email, String otp);
 
     boolean verifyOtpForEmail(String email, String otp);
 
     void saveFarmer(FarmerPersonalInfo farmer);
+
+    boolean emailExists(String email);
 }

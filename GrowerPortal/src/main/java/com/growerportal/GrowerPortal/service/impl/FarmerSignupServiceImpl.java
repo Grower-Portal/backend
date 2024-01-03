@@ -45,14 +45,31 @@ public class FarmerSignupServiceImpl implements FarmerSignupService {
         return farmerRepository.save(farmer);
     }
 
-    public void saveOtpForEmail(String email, String otp) {
-        VerificationToken token = new VerificationToken();
-        token.setToken(otp);
-        token.setExpiryDate(Instant.now().plus(30, ChronoUnit.MINUTES));
-        token.setEmail(email);
-        verificationTokenRepository.save(token);
-
+    public boolean emailExists(String email) {
+        return farmerRepository.findByEmail(email).isPresent();
     }
+
+    public void saveOrUpdateOtpForEmail(String email, String otp) {
+        VerificationToken token;
+        token = new VerificationToken();
+
+        Optional<VerificationToken> tokenOptional = verificationTokenRepository.findTokenByEmail(email);
+//        VerificationToken token;
+        if (tokenOptional.isPresent()) {
+            // If an entry exists, update it with the new OTP and expiry date.
+            token = tokenOptional.get();
+            token.setToken(otp);
+        } else {
+            // If no entry exists, create a new one.
+            token = new VerificationToken();
+            token.setEmail(email);
+            token.setToken(otp);
+        }
+        token.setExpiryDate(Instant.now().plus(30, ChronoUnit.MINUTES));
+        verificationTokenRepository.save(token);
+    }
+
+
 
     public boolean verifyOtpForEmail(String email, String otp) {
         Optional<VerificationToken> verificationTokenOptional = verificationTokenRepository.findTokenByEmail(email);

@@ -6,6 +6,7 @@ import com.growerportal.GrowerPortal.service.EmailService;
 import com.growerportal.GrowerPortal.service.FarmerSignupService;
 import com.growerportal.GrowerPortal.service.impl.EmailServiceImpl;
 import com.growerportal.GrowerPortal.service.impl.FarmerSignupServiceImpl;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,12 +27,23 @@ public class FarmerSignUpController {
 
     @PostMapping("/send-verification-code")
     public ResponseEntity<?> sendVerificationCode(@RequestParam String email) {
-        // Generate OTP and send email logic
-        String otp = emailServiceImpl.generateOtp();
-        emailServiceImpl.sendVerificationEmail(email, otp);
-        // Store the OTP with a timestamp in the database linked to the user's email
-        signupService.saveOtpForEmail(email, otp);
-        return ResponseEntity.ok("Verification code sent to email.");
+
+        try {
+            if (signupService.emailExists(email)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account with this email already exists, please login or use another email for signup");
+            }
+            // Generate OTP and send email logic
+            String otp = emailServiceImpl.generateOtp();
+            emailServiceImpl.sendVerificationEmail(email, otp);
+            // Store the OTP with a timestamp in the database linked to the user's email
+            signupService.saveOrUpdateOtpForEmail(email, otp);
+            return ResponseEntity.ok("Verification code sent to email.");
+
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account with this email already exists, please login or use another email for signup");
+        }
+
+
     }
 
     // Method to verify OTP and save farmer details
