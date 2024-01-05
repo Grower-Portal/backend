@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Base64;
 
 @Service
-public class EmailServiceImpl implements EmailService {
+public class EmailServiceImpl extends EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
