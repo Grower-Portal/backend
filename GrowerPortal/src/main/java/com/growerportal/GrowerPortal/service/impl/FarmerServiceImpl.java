@@ -1,21 +1,28 @@
 package com.growerportal.GrowerPortal.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
 import com.growerportal.GrowerPortal.Dto.UserInfoDto;
 import com.growerportal.GrowerPortal.entity.FarmerPersonalInfo;
 import com.growerportal.GrowerPortal.repository.FarmerPersonalInfoRepository;
+import com.growerportal.GrowerPortal.repository.FarmerRequestForApprovalRepository;
 import com.growerportal.GrowerPortal.service.FarmerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class FarmerServiceImpl implements FarmerService {
 
 
     private final FarmerPersonalInfoRepository farmerPersonalInfoRepository;
+    
+    private final FarmerRequestForApprovalRepository farmerRequestRepository;
 
-
-    public FarmerServiceImpl(FarmerPersonalInfoRepository farmerPersonalInfoRepository) {
+    public FarmerServiceImpl(FarmerPersonalInfoRepository farmerPersonalInfoRepository, FarmerRequestForApprovalRepository farmerRequestRepository) {
         this.farmerPersonalInfoRepository = farmerPersonalInfoRepository;
+		this.farmerRequestRepository = farmerRequestRepository;
     }
 
     public UserInfoDto getUserInfo(String email) {
@@ -30,5 +37,19 @@ public class FarmerServiceImpl implements FarmerService {
         userInfoDTO.setDob(farmer.getDob());
 
         return userInfoDTO;
+    }
+    
+
+    public Map<String, Double> getAutoPopulatedFields(Long farmerId) {
+        List<Object[]> results = farmerRequestRepository.getAutoPopulatedFields(farmerId);
+
+        Map<String, Double> uniqueFramIds = new HashMap<>();
+        for (Object[] result : results) {
+            String framId = (String) result[0];
+            Double sumRptQty = (Double) result[1];
+            uniqueFramIds.put(framId, sumRptQty);
+        }
+
+        return uniqueFramIds;
     }
 }

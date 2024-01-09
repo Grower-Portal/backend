@@ -1,16 +1,21 @@
 package com.growerportal.GrowerPortal.controller;
 
-import com.growerportal.GrowerPortal.dto.PasswordDto;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.growerportal.GrowerPortal.Dto.PasswordDto;
 import com.growerportal.GrowerPortal.entity.FarmerPersonalInfo;
 import com.growerportal.GrowerPortal.repository.UserRepository;
 import com.growerportal.GrowerPortal.service.EmailService;
 import com.growerportal.GrowerPortal.service.PasswordResetTokenService;
 import com.growerportal.GrowerPortal.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
