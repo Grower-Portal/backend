@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/GrowerPortal/GrowerPortal.iml" filepath="$PROJECT_DIR$/GrowerPortal/GrowerPortal.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/IntelliJ.iml" filepath="$PROJECT_DIR$/.idea/IntelliJ.iml" />
     </modules>
   </component>
