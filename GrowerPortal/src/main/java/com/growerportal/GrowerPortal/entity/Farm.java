@@ -38,6 +38,8 @@ public class Farm {
     @JoinColumn(name = "farm_detail_id", referencedColumnName = "farmDetailId")
     private FarmDetails farmDetails;
 
+    @OneToOne(mappedBy = "farm", cascade = CascadeType.ALL)
+    private Survey survey;
     // Getters and setters
 }
 

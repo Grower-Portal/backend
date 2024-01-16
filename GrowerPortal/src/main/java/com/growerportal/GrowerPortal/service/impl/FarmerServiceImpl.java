@@ -1,10 +1,9 @@
 package com.growerportal.GrowerPortal.service.impl;
 
-import com.growerportal.GrowerPortal.Dto.UserInfoDto;
+import com.growerportal.GrowerPortal.dto.UserInfoDto;
 import com.growerportal.GrowerPortal.entity.FarmerPersonalInfo;
 import com.growerportal.GrowerPortal.repository.FarmerPersonalInfoRepository;
 import com.growerportal.GrowerPortal.service.FarmerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

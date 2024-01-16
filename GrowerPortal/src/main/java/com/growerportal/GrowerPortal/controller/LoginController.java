@@ -1,7 +1,7 @@
 package com.growerportal.GrowerPortal.controller;
 
 
-import com.growerportal.GrowerPortal.Dto.LoginDto;
+import com.growerportal.GrowerPortal.dto.LoginDto;
 import com.growerportal.GrowerPortal.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

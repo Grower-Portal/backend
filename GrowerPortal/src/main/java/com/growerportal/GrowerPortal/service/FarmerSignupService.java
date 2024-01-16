@@ -1,6 +1,6 @@
 package com.growerportal.GrowerPortal.service;
 
-import com.growerportal.GrowerPortal.Dto.FarmerSignupDto;
+import com.growerportal.GrowerPortal.dto.FarmerSignupDto;
 import com.growerportal.GrowerPortal.entity.FarmerPersonalInfo;
 
 public interface FarmerSignupService {
