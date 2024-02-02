@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    image: yaseenmd22/growerbackend:0.0.1
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/growerdb?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Warangal@2023
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: Warangal@2023
+      MYSQL_DATABASE: growerdb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Warangal@2023
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+    db-data:
