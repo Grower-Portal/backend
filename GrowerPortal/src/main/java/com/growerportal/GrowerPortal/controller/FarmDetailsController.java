@@ -1,6 +1,6 @@
 package com.growerportal.GrowerPortal.controller;
 
-import com.growerportal.GrowerPortal.entity.FarmDetails;
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
 import com.growerportal.GrowerPortal.service.FarmDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/farm-details")
 public class FarmDetailsController {
-
     private final FarmDetailsService farmDetailsService;
 
     @Autowired
@@ -21,14 +20,14 @@ public class FarmDetailsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FarmDetails>> getAllFarmDetails() {
-        List<FarmDetails> farmDetailsList = farmDetailsService.getAllFarmDetails();
+    public ResponseEntity<List<AddApplicationDto.FarmDetailsDto>> getAllFarmDetails() {
+        List<AddApplicationDto.FarmDetailsDto> farmDetailsList = farmDetailsService.getAllFarmDetails();
         return new ResponseEntity<>(farmDetailsList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FarmDetails> getFarmDetailsById(@PathVariable Long id) {
-        FarmDetails farmDetails = farmDetailsService.getFarmDetailsById(id);
+    public ResponseEntity<AddApplicationDto.FarmDetailsDto> getFarmDetailsById(@PathVariable Long id) {
+        AddApplicationDto.FarmDetailsDto farmDetails = farmDetailsService.getFarmDetailsDtoById(id);
         if (farmDetails == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -36,14 +35,14 @@ public class FarmDetailsController {
     }
 
     @PostMapping
-    public ResponseEntity<FarmDetails> createFarmDetails(@RequestBody FarmDetails farmDetails) {
-        FarmDetails createdFarmDetails = farmDetailsService.createFarmDetails(farmDetails);
+    public ResponseEntity<AddApplicationDto.FarmDetailsDto> createFarmDetails(@RequestBody AddApplicationDto.FarmDetailsDto farmDetailsDto) {
+        AddApplicationDto.FarmDetailsDto createdFarmDetails = farmDetailsService.createFarmDetailsDto(farmDetailsDto);
         return new ResponseEntity<>(createdFarmDetails, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FarmDetails> updateFarmDetails(@PathVariable Long id, @RequestBody FarmDetails farmDetails) {
-        FarmDetails updatedFarmDetails = farmDetailsService.updateFarmDetails(id, farmDetails);
+    public ResponseEntity<AddApplicationDto.FarmDetailsDto> updateFarmDetails(@PathVariable Long id, @RequestBody AddApplicationDto.FarmDetailsDto farmDetailsDto) {
+        AddApplicationDto.FarmDetailsDto updatedFarmDetails = farmDetailsService.updateFarmDetailsDto(id, farmDetailsDto);
         if (updatedFarmDetails == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

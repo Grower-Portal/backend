@@ -1,47 +1,50 @@
 package com.growerportal.GrowerPortal.service;
 
-import com.growerportal.GrowerPortal.entity.FarmDetails;
-import com.growerportal.GrowerPortal.repository.FarmDetailsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class FarmDetailsService {
+        private final List<AddApplicationDto.FarmDetailsDto> farmDetailsList = new ArrayList<>();
+        private Long farmDetailIdCounter = 1L;
 
-    private final FarmDetailsRepository farmDetailsRepository;
-
-    @Autowired
-    public FarmDetailsService(FarmDetailsRepository farmDetailsRepository) {
-        this.farmDetailsRepository = farmDetailsRepository;
-    }
-
-    public List<FarmDetails> getAllFarmDetails() {
-        return farmDetailsRepository.findAll();
-    }
-
-    public FarmDetails getFarmDetailsById(Long id) {
-        return farmDetailsRepository.findById(id).orElse(null);
-    }
-
-    public FarmDetails createFarmDetails(FarmDetails farmDetails) {
-        return farmDetailsRepository.save(farmDetails);
-    }
-
-    public FarmDetails updateFarmDetails(Long id, FarmDetails farmDetails) {
-        FarmDetails existingFarmDetails = getFarmDetailsById(id);
-        if (existingFarmDetails == null) {
-            return null; // Handle not found case
+        public List<AddApplicationDto.FarmDetailsDto> getAllFarmDetails() {
+            return farmDetailsList;
         }
 
-        // Update properties of existingFarmDetails with values from farmDetails
+        public AddApplicationDto.FarmDetailsDto getFarmDetailsDtoById(Long id) {
+            for (AddApplicationDto.FarmDetailsDto farmDetails : farmDetailsList) {
+                if (farmDetails.getFarmDetailId().equals(id)) {
+                    return farmDetails;
+                }
+            }
+            return null;
+        }
 
-        return farmDetailsRepository.save(existingFarmDetails);
-    }
+        public AddApplicationDto.FarmDetailsDto createFarmDetailsDto(AddApplicationDto.FarmDetailsDto farmDetailsDto) {
+            farmDetailsDto.setFarmDetailId(farmDetailIdCounter++);
+            farmDetailsList.add(farmDetailsDto);
+            return farmDetailsDto;
+        }
 
-    public void deleteFarmDetails(Long id) {
-        farmDetailsRepository.deleteById(id);
-    }
+        public AddApplicationDto.FarmDetailsDto updateFarmDetailsDto(Long id, AddApplicationDto.FarmDetailsDto farmDetailsDto) {
+            AddApplicationDto.FarmDetailsDto existingFarmDetailsDto = getFarmDetailsDtoById(id);
+            if (existingFarmDetailsDto != null) {
+                BeanUtils.copyProperties(farmDetailsDto, existingFarmDetailsDto, "farmDetailId");
+                return existingFarmDetailsDto;
+            }
+            return null;
+        }
+
+        public void deleteFarmDetails(Long id) {
+            AddApplicationDto.FarmDetailsDto farmDetailsDto = getFarmDetailsDtoById(id);
+            if (farmDetailsDto != null) {
+                farmDetailsList.remove(farmDetailsDto);
+            }
+        }
 }
 

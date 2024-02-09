@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**") // Set the URL pattern for which CORS should be enabled
+        registry.addMapping("/**") // Set the URL pattern for which CORS should be enabled
                 .allowedOrigins("http://localhost:3000") // Replace with your React app's URL
                 .allowedMethods("GET", "POST", "PUT", "DELETE");
     }

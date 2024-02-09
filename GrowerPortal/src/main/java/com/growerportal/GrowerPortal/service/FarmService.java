@@ -1,14 +1,14 @@
 package com.growerportal.GrowerPortal.service;
 
-import com.growerportal.GrowerPortal.entity.Farm;
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
 
 import java.util.List;
 
 public interface FarmService {
-    List<Farm> getAllFarms();
-    Farm getFarmById(Long id);
-    Farm createFarm(Farm farm);
-    Farm updateFarm(Long id, Farm farm);
+    List<AddApplicationDto.FarmDto> getAllFarms();
+    AddApplicationDto.FarmDto getFarmById(Long id);
+    AddApplicationDto.FarmDto createFarm(AddApplicationDto.FarmDto farmDto);
+    AddApplicationDto.FarmDto updateFarm(Long id, AddApplicationDto.FarmDto farmDto);
     void deleteFarm(Long id);
 }
 
