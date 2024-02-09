@@ -1,7 +1,7 @@
 package com.growerportal.GrowerPortal.controller;
 
 
-import com.growerportal.GrowerPortal.dto.ApplicationDto;
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
 import com.growerportal.GrowerPortal.service.EmailService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ public class ApplicationSubmissionController {
 
 
     @PostMapping("/submit")
-    public ResponseEntity<?> submitApplication(@RequestBody ApplicationDto applicationDto) {
+    public ResponseEntity<?> submitApplication(@RequestBody AddApplicationDto applicationDto) {
 
         // Logic for Add Application goes here
 

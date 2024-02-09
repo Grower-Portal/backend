@@ -1,6 +1,6 @@
 package com.growerportal.GrowerPortal.controller;
 
-import com.growerportal.GrowerPortal.entity.ProducerInfo;
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
 import com.growerportal.GrowerPortal.service.ProducerInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,26 +18,26 @@ public class ProducerInfoController {
     private ProducerInfoService producerInfoService;
 
     @GetMapping
-    public ResponseEntity<List<ProducerInfo>> getAllProducerInfo() {
-        List<ProducerInfo> producerInfoList = producerInfoService.getAllProducerInfo();
+    public ResponseEntity<List<AddApplicationDto.ProducerInfoDto>> getAllProducerInfo() {
+        List<AddApplicationDto.ProducerInfoDto> producerInfoList = producerInfoService.getAllProducerInfo();
         return ResponseEntity.ok(producerInfoList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProducerInfo> getProducerInfoById(@PathVariable Long id) {
-        Optional<ProducerInfo> producerInfo = producerInfoService.getProducerInfoById(id);
+    public ResponseEntity<AddApplicationDto.ProducerInfoDto> getProducerInfoById(@PathVariable Long id) {
+        Optional<AddApplicationDto.ProducerInfoDto> producerInfo = producerInfoService.getProducerInfoById(id);
         return producerInfo.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<ProducerInfo> createProducerInfo(@RequestBody ProducerInfo producerInfo) {
-        ProducerInfo createdProducerInfo = producerInfoService.createProducerInfo(producerInfo);
+    public ResponseEntity<AddApplicationDto.ProducerInfoDto> createProducerInfo(@RequestBody AddApplicationDto.ProducerInfoDto producerInfoDto) {
+        AddApplicationDto.ProducerInfoDto createdProducerInfo = producerInfoService.createProducerInfo(producerInfoDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProducerInfo);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProducerInfo> updateProducerInfo(@PathVariable Long id, @RequestBody ProducerInfo producerInfo) {
-        producerInfoService.updateProducerInfo(id, producerInfo);
+    public ResponseEntity<Void> updateProducerInfo(@PathVariable Long id, @RequestBody AddApplicationDto.ProducerInfoDto producerInfoDto) {
+        producerInfoService.updateProducerInfo(id, producerInfoDto);
         return ResponseEntity.noContent().build();
     }
 
