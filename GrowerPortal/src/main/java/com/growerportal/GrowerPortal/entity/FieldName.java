@@ -58,7 +58,9 @@ public class FieldName {
                 .map(Farm::toDto)
                 .collect(Collectors.toSet()));
 
-        dto.setCommodityInfo(this.commodityInfo.toDto());
+        if(commodityInfo!=null) {
+            dto.setCommodityInfo(this.commodityInfo.toDto());
+        }
         return dto;
     }
 

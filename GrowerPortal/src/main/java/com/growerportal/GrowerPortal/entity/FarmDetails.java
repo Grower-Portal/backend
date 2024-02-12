@@ -21,19 +21,19 @@ public class FarmDetails {
 
     // Other fields like applicationAcres, totalLandAreaAcres
     @Column(nullable = false)
-    private Integer applicationAcres;
+    private Double applicationAcres;
 
     @Column(nullable = false)
-    private Integer totalLandAreaAcres;
+    private Double totalLandAreaAcres;
 
     @Column(nullable = false)
-    private Integer totalCroplandAcres;
+    private Double totalCroplandAcres;
 
     @Column(nullable = false)
-    private Integer totalLiveStockAcres;
+    private Double totalLiveStockAcres;
 
     @Column(nullable = false)
-    private Boolean produceLivestock;
+    private String produceLivestock;
 
     @Column
     private String livestockType1;
@@ -54,7 +54,7 @@ public class FarmDetails {
     private Integer livestockHead3;
 
     @Column
-    private Integer totalForestAreaAcres;
+    private Double totalForestAreaAcres;
 
     @Column
     private String fsaPhysicalLocation;

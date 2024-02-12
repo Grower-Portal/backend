@@ -22,7 +22,7 @@ public class Farm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long farmId; // Use a different name for the primary key
 
-    @Column(name = "farm_number", nullable = false, unique = true) // Add farmNumber column
+    @Column(name = "farm_number", nullable = false) // Add farmNumber column
     private Long farmNumber;
 
     @ManyToOne
@@ -64,7 +64,11 @@ public class Farm {
         AddApplicationDto.FarmDto dto = new AddApplicationDto.FarmDto();
         dto.setFarmId(this.farmId);
         dto.setFarmNumber(this.farmNumber);
-        dto.setFarmDetails(this.farmDetails.toDto());
+
+        if(farmDetails!=null) {
+            dto.setFarmDetails(this.farmDetails.toDto());
+        }
+//        dto.setFarmDetails(this.farmDetails.toDto());
 
         return dto;
     }

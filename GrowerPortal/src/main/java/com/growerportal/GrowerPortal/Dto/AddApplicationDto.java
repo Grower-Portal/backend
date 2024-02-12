@@ -1,19 +1,18 @@
 package com.growerportal.GrowerPortal.dto;
 
-import com.growerportal.GrowerPortal.entity.FieldName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AddApplicationDto {
 
     private Long applicationId;
     private Long farmerId;
     private ProducerInfoDto producerInfo;
-    private LocalDate applicationDate;
+    private String applicationDate;
     private String status;
 
     // Getters and setters
@@ -22,6 +21,7 @@ public class AddApplicationDto {
     @Data
     @Getter
     @Setter
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ProducerInfoDto {
         private Long producerInfoId;
         private Long applicationId;
@@ -40,6 +40,7 @@ public class AddApplicationDto {
     @Data
     @Getter
     @Setter
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class FieldNameDto {
 
         private Long fieldNameId;
@@ -52,6 +53,7 @@ public class AddApplicationDto {
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class FarmDto {
 
         private Long farmId;
@@ -64,6 +66,7 @@ public class AddApplicationDto {
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class TractDto {
 
         private Long tractId;
@@ -75,6 +78,7 @@ public class AddApplicationDto {
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CluDto {
 
         private Long cluId;
@@ -87,22 +91,23 @@ public class AddApplicationDto {
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class FarmDetailsDto {
 
         private Long farmDetailId;
         private Long FarmId;
-        private Integer applicationAcres;
-        private Integer totalLandAreaAcres;
-        private Integer totalCroplandAcres;
-        private Integer totalLiveStockAcres;
-        private Boolean produceLivestock;
+        private Double applicationAcres;
+        private Double totalLandAreaAcres;
+        private Double totalCroplandAcres;
+        private Double totalLiveStockAcres;
+        private String produceLivestock;
         private String livestockType1;
         private Integer livestockHead1;
         private String livestockType2;
         private Integer livestockHead2;
         private String livestockType3;
         private Integer livestockHead3;
-        private Integer totalForestAreaAcres;
+        private Double totalForestAreaAcres;
         private String fsaPhysicalLocation;
         private String pastCsafPractice;
         private String transitioningToUsdaCertified;
@@ -111,6 +116,7 @@ public class AddApplicationDto {
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CommodityInfoDto {
         private Long commodityInfoId;
         private Long fieldNameId;

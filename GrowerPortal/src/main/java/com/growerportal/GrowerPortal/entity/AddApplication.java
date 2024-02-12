@@ -29,7 +29,7 @@ public class AddApplication {
     private ProducerInfo producerInfo;
 
     @Column(nullable = false)
-    private LocalDate applicationDate;
+    private String applicationDate;
 
     @Column(nullable = false)
     private String status;

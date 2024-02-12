@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class Apicontrollers {
-    @GetMapping("/")
-    public String getPage() {
-        return "Welcome";
-    }
+//    @GetMapping("/")
+//    public String getPage() {
+//        return "Welcome";
+//    }
 }
