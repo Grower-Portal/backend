@@ -111,6 +111,11 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.7.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-storage</artifactId>
+			<version>1.113.12</version> <!-- Use the latest version available -->
+		</dependency>
 
 		<!--		<dependency>-->
 <!--			<groupId>io.springfox</groupId>-->

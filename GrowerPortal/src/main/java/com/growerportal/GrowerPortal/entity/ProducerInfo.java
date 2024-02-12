@@ -56,6 +56,9 @@ public class ProducerInfo {
     @Column(nullable = false)
     private String implementedCsafPractices;
 
+    @OneToOne(mappedBy = "producerInfo")
+    private Survey survey;
+
     // Standard constructors, getters, and setters
     public void addFieldName(FieldName fieldName) {
         this.fieldName.add(fieldName);
