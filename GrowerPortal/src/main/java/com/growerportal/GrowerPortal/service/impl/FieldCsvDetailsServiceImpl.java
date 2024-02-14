@@ -27,4 +27,11 @@ public class FieldCsvDetailsServiceImpl implements FieldCsvDetailsService {
             Long farmNumber, Long tractNumber, Long cluNumber) {
         return fieldCsvDetailsRepository.findCluCalculatedAcreageByFarmTractClu(farmNumber, tractNumber, cluNumber);
     }
+
+    @Override
+    public Double getTotalCalculatedAcreageByFarmNumber(
+            Long farmNumber){
+        return fieldCsvDetailsRepository.getTotalCalculatedAcreageByFarmNumber(farmNumber);
+    }
+
 }

@@ -22,4 +22,7 @@ public interface FieldCsvDetailsRepository extends JpaRepository<FieldCsvDetails
             @Param("tractNumber") Long tractNumber,
             @Param("cluNumber") Long cluNumber);
 
+    @Query("SELECT SUM(ld.cluCalculatedAcreage) FROM FieldCsvDetails ld WHERE ld.farmNumber = :farmNumber")
+    Double getTotalCalculatedAcreageByFarmNumber(@Param("farmNumber") Long farmNumber);
+
 }

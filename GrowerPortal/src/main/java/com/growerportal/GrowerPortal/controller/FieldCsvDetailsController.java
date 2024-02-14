@@ -27,4 +27,11 @@ public class FieldCsvDetailsController {
         return fieldCsvDetailsService.findCluCalculatedAcreageByFarmTractClu(farmNumber, tractNumber, cluNumber);
     }
 
+    @GetMapping("/getTotalCalculatedAcreageByFarmNumber")
+    public Double getTotalCalculatedAcreageByFarmNumber(
+            @RequestParam Long farmNumber
+    ) {
+        return fieldCsvDetailsService.getTotalCalculatedAcreageByFarmNumber(farmNumber);
+    }
+
 }

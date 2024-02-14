@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +31,7 @@ public class ProducerInfo {
 
     @OneToMany(mappedBy = "producerInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private Set<FieldName> fieldName = new HashSet<>();
+    private List<Farm> farm = new ArrayList<>();
 
     @Column(nullable = false)
     private String producerName;
@@ -60,9 +61,14 @@ public class ProducerInfo {
     private Survey survey;
 
     // Standard constructors, getters, and setters
-    public void addFieldName(FieldName fieldName) {
-        this.fieldName.add(fieldName);
-        fieldName.setProducerInfo(this);
+//    public void addFieldName(FieldName fieldName) {
+//        this.fieldName.add(fieldName);
+//        fieldName.setProducerInfo(this);
+//    }
+
+    public void addFarm(Farm farm){
+        this.farm.add(farm);
+        farm.setProducerInfo(this);
     }
 
     public AddApplicationDto.ProducerInfoDto toDTO() {
@@ -77,9 +83,9 @@ public class ProducerInfo {
         dto.setBaselineYield(this.baselineYield);
         dto.setPrimaryReasonForApplying(this.primaryReasonForApplying);
         dto.setImplementedCsafPractices(this.implementedCsafPractices);
-        dto.setFieldName(this.fieldName.stream()
-                .map(FieldName::toDto)
-                .collect(Collectors.toSet()));
+        dto.setFarm(this.farm.stream()
+                .map(Farm::toDto)
+                .collect(Collectors.toList()));
         return dto;
     }
 }

@@ -69,15 +69,14 @@ public class AddApplicationService {
 
     private AddApplication mapDtoToEntity(AddApplicationDto dto) {
         AddApplication entity = new AddApplication();
-        entity.setApplicationId(dto.getApplicationId());
+        //entity.setApplicationId(dto.getApplicationId());
         entity.setApplicationDate(dto.getApplicationDate());
         entity.setStatus(dto.getStatus());
 
         // Map ProducerInfoDto
         if (Objects.nonNull(dto.getProducerInfo())) {
             ProducerInfo producerInfo = new ProducerInfo();
-            producerInfo.setProducerInfoId(dto.getProducerInfo().getProducerInfoId());
-            producerInfo.setAddApplication(entity);
+            //producerInfo.setProducerInfoId(dto.getProducerInfo().getProducerInfoId());
             // Map other fields as needed
             producerInfo.setProducerName(dto.getProducerInfo().getProducerName());
             producerInfo.setProducerEntityName(dto.getProducerInfo().getProducerEntityName());
@@ -87,107 +86,101 @@ public class AddApplicationService {
             producerInfo.setBaselineYield(dto.getProducerInfo().getBaselineYield());
             producerInfo.setPrimaryReasonForApplying(dto.getProducerInfo().getPrimaryReasonForApplying());
             producerInfo.setImplementedCsafPractices(dto.getProducerInfo().getImplementedCsafPractices());
-
+            producerInfo.setAddApplication(entity);
             // Map FieldNameDto
-            if (Objects.nonNull(dto.getProducerInfo().getFieldName())) {
-                for (AddApplicationDto.FieldNameDto fieldNameDto : dto.getProducerInfo().getFieldName()) {
-                    FieldName fieldName = new FieldName();
-                    fieldName.setFieldNameId(fieldNameDto.getFieldNameId());
-                    fieldName.setFieldName(fieldNameDto.getFieldName());
-                    fieldName.setFarm(fieldName.getFarm());
-                    fieldName.setProducerInfo(producerInfo);
-                    fieldName.setReportQtyAcres(fieldNameDto.getReportQtyAcres());
+            if (Objects.nonNull(dto.getProducerInfo().getFarm())) {
+                for (AddApplicationDto.FarmDto farmDto : dto.getProducerInfo().getFarm()) {
+                    Farm farm = new Farm();
+                   // farm.setFarmId(farmDto.getFarmId());
+                    farm.setFarmNumber(farmDto.getFarmNumber());
+                    farm.setFieldName(farm.getFieldName());
+                    farm.setTracts(farm.getTracts());
+                    farm.setProducerInfo(producerInfo);
+                    farm.setFarmDetails(farm.getFarmDetails());
                     // Map other fields as needed
                     // Map CommodityInfoDto if exists
-                    if (Objects.nonNull(fieldNameDto.getCommodityInfo())) {
-                        CommodityInfo commodityInfo = new CommodityInfo();
-                        commodityInfo.setFieldName(fieldName);
-                        commodityInfo.setReportQtyAcres(fieldNameDto.getCommodityInfo().getReportQtyAcres());
-                        commodityInfo.setCommodityCategory(fieldNameDto.getCommodityInfo().getCommodityCategory());
-                        commodityInfo.setCommodityType(fieldNameDto.getCommodityInfo().getCommodityType());
-                        commodityInfo.setLandUseHistory(fieldNameDto.getCommodityInfo().getLandUseHistory());
-                        commodityInfo.setIrrigationHistory(fieldNameDto.getCommodityInfo().getIrrigationHistory());
-                        commodityInfo.setTillageHistory(fieldNameDto.getCommodityInfo().getTillageHistory());
-                        commodityInfo.setCsafPracticeHistory(fieldNameDto.getCommodityInfo().getCsafPracticeHistory());
-                        commodityInfo.setPastCsafPracticeHistory(fieldNameDto.getCommodityInfo().getPastCsafPracticeHistory());
+                    if (Objects.nonNull(farmDto.getFieldName())) {
+                        for (AddApplicationDto.FieldNameDto fieldNameDto : farmDto.getFieldName()) {
+                            FieldName fieldName = new FieldName();
+                         //   fieldName.setFieldNameId(fieldNameDto.getFieldNameId());
+                            fieldName.setFieldName(fieldNameDto.getFieldName());
+                            fieldName.setReportQtyAcres(fieldNameDto.getReportQtyAcres());
+                            fieldName.setCommodityInfo(fieldName.getCommodityInfo());
+                            fieldName.setFarm(farm);
 
-                        fieldName.setCommodityInfo(commodityInfo);
-                    }
-
-                    // Map FarmDto
-                    if (Objects.nonNull(fieldNameDto.getFarm())) {
-                        for (AddApplicationDto.FarmDto farmDto : fieldNameDto.getFarm()) {
-                            Farm farm = new Farm();
-                            farm.setFarmId(farmDto.getFarmId());
-                            farm.setFarmNumber(farmDto.getFarmNumber());
-                            farm.setTracts(farm.getTracts());
-                            farm.setFarmDetails(farm.getFarmDetails());
-                            farm.setFieldName(fieldName);
-                            // Map other fields as needed
-
-                            if(Objects.nonNull(farmDto.getFarmDetails())){
-                                FarmDetails farmDetails = new FarmDetails();
-                                farmDetails.setFarmDetailId(farmDto.getFarmDetails().getFarmDetailId());
-                                farmDetails.setFarm(farm);
-                                farmDetails.setApplicationAcres(farmDto.getFarmDetails().getApplicationAcres());
-                                farmDetails.setProduceLivestock(farmDto.getFarmDetails().getProduceLivestock());
-                                farmDetails.setLivestockType1(farmDto.getFarmDetails().getLivestockType1());
-                                farmDetails.setLivestockHead1(farmDto.getFarmDetails().getLivestockHead1());
-                                farmDetails.setLivestockType2(farmDto.getFarmDetails().getLivestockType2());
-                                farmDetails.setLivestockHead2(farmDto.getFarmDetails().getLivestockHead2());
-                                farmDetails.setLivestockType3(farmDto.getFarmDetails().getLivestockType3());
-                                farmDetails.setFsaPhysicalLocation(farmDto.getFarmDetails().getFsaPhysicalLocation());
-                                farmDetails.setTotalLiveStockAcres(farmDto.getFarmDetails().getTotalLiveStockAcres());
-                                farmDetails.setPastCsafPractice(farmDto.getFarmDetails().getPastCsafPractice());
-                                farmDetails.setTotalCroplandAcres(farmDto.getFarmDetails().getTotalCroplandAcres());
-                                farmDetails.setTotalLandAreaAcres(farmDto.getFarmDetails().getTotalLandAreaAcres());
-                                farmDetails.setTotalForestAreaAcres(farmDto.getFarmDetails().getTotalForestAreaAcres());
-                                farmDetails.setTransitioningToUsdaCertified(farmDto.getFarmDetails().getTransitioningToUsdaCertified());
-
-                                farm.setFarmDetails(farmDetails); // Set farmDetails to farm
-
+                            if (Objects.nonNull(fieldNameDto.getCommodityInfo())) {
+                                CommodityInfo commodityInfo = new CommodityInfo();
+                                commodityInfo.setReportQtyAcres(fieldNameDto.getCommodityInfo().getReportQtyAcres());
+                                commodityInfo.setCommodityCategory(fieldNameDto.getCommodityInfo().getCommodityCategory());
+                                commodityInfo.setCommodityType(fieldNameDto.getCommodityInfo().getCommodityType());
+                                commodityInfo.setLandUseHistory(fieldNameDto.getCommodityInfo().getLandUseHistory());
+                                commodityInfo.setIrrigationHistory(fieldNameDto.getCommodityInfo().getIrrigationHistory());
+                                commodityInfo.setTillageHistory(fieldNameDto.getCommodityInfo().getTillageHistory());
+                                commodityInfo.setCsafPracticeHistory(fieldNameDto.getCommodityInfo().getCsafPracticeHistory());
+                                commodityInfo.setPastCsafPracticeHistory(fieldNameDto.getCommodityInfo().getPastCsafPracticeHistory());
+                                commodityInfo.setFieldName(fieldName);
+                                fieldName.setCommodityInfo(commodityInfo);
                             }
-
-                            // Map TractDto
-                            if (Objects.nonNull(farmDto.getTract())) {
-                                for (AddApplicationDto.TractDto tractDto : farmDto.getTract()) {
-                                    Tract tract = new Tract();
-                                    tract.setTractId(tractDto.getTractId());
-                                    tract.setTractNumber(tractDto.getTractNumber());
-                                    tract.setClus(tract.getClus());
-                                    tract.setFarm(farm);
-                                    // Map other fields as needed
-
-                                    // Map CluDto
-                                    if (Objects.nonNull(tractDto.getClu())) {
-                                        for (AddApplicationDto.CluDto cluDto : tractDto.getClu()) {
-                                            Clu clu = new Clu();
-                                            clu.setCluId(cluDto.getCluId());
-                                            clu.setCluNumber(cluDto.getCluNumber());
-                                            clu.setAcres(cluDto.getAcres());
-                                            clu.setFsaPhysicalLocation(cluDto.getFsaPhysicalLocation());
-                                            clu.setTract(tract);
-                                            // Map other fields as needed
-
-                                            tract.addClu(clu);
-                                        }
-                                    }
-
-                                    farm.addTract(tract);
-                                }
-                            }
-
-                            fieldName.addFarm(farm);
+                            farm.addFieldName(fieldName);
                         }
                     }
 
-                    producerInfo.addFieldName(fieldName);
+
+                    if (Objects.nonNull(farmDto.getFarmDetails())) {
+                        FarmDetails farmDetails = new FarmDetails();
+              //          farmDetails.setFarmDetailId(farmDto.getFarmDetails().getFarmDetailId());
+                        farmDetails.setApplicationAcres(farmDto.getFarmDetails().getApplicationAcres());
+                        farmDetails.setProduceLivestock(farmDto.getFarmDetails().getProduceLivestock());
+                        farmDetails.setLivestockType1(farmDto.getFarmDetails().getLivestockType1());
+                        farmDetails.setLivestockHead1(farmDto.getFarmDetails().getLivestockHead1());
+                        farmDetails.setLivestockType2(farmDto.getFarmDetails().getLivestockType2());
+                        farmDetails.setLivestockHead2(farmDto.getFarmDetails().getLivestockHead2());
+                        farmDetails.setLivestockType3(farmDto.getFarmDetails().getLivestockType3());
+                        farmDetails.setFsaPhysicalLocation(farmDto.getFarmDetails().getFsaPhysicalLocation());
+                        farmDetails.setTotalLiveStockAcres(farmDto.getFarmDetails().getTotalLiveStockAcres());
+                        farmDetails.setPastCsafPractice(farmDto.getFarmDetails().getPastCsafPractice());
+                        farmDetails.setTotalCroplandAcres(farmDto.getFarmDetails().getTotalCroplandAcres());
+                        farmDetails.setTotalLandAreaAcres(farmDto.getFarmDetails().getTotalLandAreaAcres());
+                        farmDetails.setTotalForestAreaAcres(farmDto.getFarmDetails().getTotalForestAreaAcres());
+                        farmDetails.setTransitioningToUsdaCertified(farmDto.getFarmDetails().getTransitioningToUsdaCertified());
+                        farmDetails.setFarm(farm);
+                        farm.setFarmDetails(farmDetails); // Set farmDetails to farm
+
+                    }
+
+                    // Map TractDto
+                    if (Objects.nonNull(farmDto.getTract())) {
+                        for (AddApplicationDto.TractDto tractDto : farmDto.getTract()) {
+                            Tract tract = new Tract();
+                       //     tract.setTractId(tractDto.getTractId());
+                            tract.setTractNumber(tractDto.getTractNumber());
+                            tract.setClus(tract.getClus());
+                            tract.setFarm(farm);
+                            // Map other fields as needed
+
+                            // Map CluDto
+                            if (Objects.nonNull(tractDto.getClu())) {
+                                for (AddApplicationDto.CluDto cluDto : tractDto.getClu()) {
+                                    Clu clu = new Clu();
+                         //           clu.setCluId(cluDto.getCluId());
+                                    clu.setCluNumber(cluDto.getCluNumber());
+                                    clu.setAcres(cluDto.getAcres());
+                                    clu.setFsaPhysicalLocation(cluDto.getFsaPhysicalLocation());
+                                    clu.setTract(tract);
+                                    // Map other fields as needed
+
+                                    tract.addClu(clu);
+                                }
+                            }
+                            farm.addTract(tract);
+                        }
+                    }
+
+                    producerInfo.addFarm(farm);
                 }
             }
-
             entity.setProducerInfo(producerInfo);
         }
-        // Map other properties if needed
         return entity;
     }
 }

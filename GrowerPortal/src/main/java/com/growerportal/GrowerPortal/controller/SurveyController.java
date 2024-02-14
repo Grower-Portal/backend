@@ -4,10 +4,7 @@ import com.growerportal.GrowerPortal.dto.SurveyDto;
 import com.growerportal.GrowerPortal.entity.Survey;
 import com.growerportal.GrowerPortal.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -21,6 +18,10 @@ public class SurveyController {
         this.surveyService = surveyService;
     }
 
+    @CrossOrigin(
+            origins = "http://localhost:3000",
+            methods = {RequestMethod.POST},
+            allowedHeaders = {"Authorization", "Content-Type"})
     @PostMapping(consumes = {"multipart/form-data"})
     public Survey createSurvey(@ModelAttribute SurveyDto survey) throws IOException {
         return surveyService.saveSurvey(survey);

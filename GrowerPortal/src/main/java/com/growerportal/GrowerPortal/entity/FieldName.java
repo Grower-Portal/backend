@@ -26,14 +26,15 @@ public class FieldName {
     @Column(nullable = false)
     private String fieldName;
 
-    @ManyToOne
-    @JoinColumn(name = "producer_info_id", nullable = false)
-    @JsonBackReference
-    private ProducerInfo producerInfo;
+//    @ManyToOne
+//    @JoinColumn(name = "producer_info_id", nullable = false)
+//    @JsonBackReference
+//    private ProducerInfo producerInfo;
 
-    @OneToMany(mappedBy = "fieldName", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Set<Farm> farm = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "farm_id", nullable = false)
+    @JsonBackReference
+    private Farm farm;
 
 
     @Column(nullable = false)
@@ -53,10 +54,9 @@ public class FieldName {
         dto.setFieldNameId(this.fieldNameId);
         dto.setFieldName(this.fieldName);
         dto.setReportQtyAcres(this.reportQtyAcres);
+
         // Map farms using streams
-        dto.setFarm(this.farm.stream()
-                .map(Farm::toDto)
-                .collect(Collectors.toSet()));
+
 
         if(commodityInfo!=null) {
             dto.setCommodityInfo(this.commodityInfo.toDto());
@@ -77,10 +77,7 @@ public class FieldName {
         return Objects.equals(fieldNameId, fieldName.fieldNameId);
     }
 
-    public void addFarm(Farm farm) {
-        this.farm.add(farm);
-        farm.setFieldName(this);
-    }
+
 }
 
 

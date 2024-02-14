@@ -1,6 +1,7 @@
 package com.growerportal.GrowerPortal.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.*;
 import java.util.List;
 import java.util.Set;
@@ -33,8 +34,22 @@ public class AddApplicationDto {
         private int baselineYield;
         private String primaryReasonForApplying;
         private String implementedCsafPractices;
-        private Set<FieldNameDto> fieldName;
+        private List<FarmDto> farm;
 
+    }
+
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class FarmDto {
+
+        private Long farmId;
+        private Long farmNumber;
+        private List<TractDto> tract;
+        private List<FieldNameDto> fieldName;
+        private FarmDetailsDto farmDetails;
+
+
+        // Getters and setters
     }
 
     @Data
@@ -46,21 +61,7 @@ public class AddApplicationDto {
         private Long fieldNameId;
         private String fieldName;
         private double reportQtyAcres;
-        private Set<FarmDto> farm;
         private CommodityInfoDto commodityInfo;
-
-        // Getters and setters
-    }
-
-    @Data
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class FarmDto {
-
-        private Long farmId;
-        private Long farmNumber;
-        private List<TractDto> tract;
-        private FarmDetailsDto farmDetails;
-
 
         // Getters and setters
     }

@@ -7,8 +7,11 @@ import com.growerportal.GrowerPortal.dto.AddApplicationDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.checkerframework.checker.units.qual.A;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -26,7 +29,7 @@ public class Tract {
 
     @OneToMany(mappedBy = "tract", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private Set<Clu> clus;
+    private List<Clu> clus = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "farm_id", nullable = false)
@@ -35,12 +38,12 @@ public class Tract {
 
     // Getters and setters
 // Ensure the clus set is lazily initialized
-    public Set<Clu> getClus() {
-        if (clus == null) {
-            clus = new HashSet<>();
-        }
-        return clus;
-    }
+//    public Set<Clu> getClus() {
+//        if (clus == null) {
+//            clus = new HashSet<>();
+//        }
+//        return clus;
+//    }
 
     // Method to add a Clu to the set
     public void addClu(Clu clu) {

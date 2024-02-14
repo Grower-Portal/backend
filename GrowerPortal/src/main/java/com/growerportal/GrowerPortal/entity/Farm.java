@@ -9,9 +9,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -26,13 +25,17 @@ public class Farm {
     private Long farmNumber;
 
     @ManyToOne
-    @JoinColumn(name = "field_name_id", nullable = false)
+    @JoinColumn(name = "producer_info_id", nullable = false)
     @JsonBackReference
-    private FieldName fieldName;
+    private ProducerInfo producerInfo;
 
     @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private Set<Tract> tracts = new HashSet<>();
+    private List<FieldName> fieldName = new ArrayList<>();
+
+    @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Tract> tracts = new ArrayList<>();
 
     @OneToOne(mappedBy = "farm", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -64,6 +67,9 @@ public class Farm {
         AddApplicationDto.FarmDto dto = new AddApplicationDto.FarmDto();
         dto.setFarmId(this.farmId);
         dto.setFarmNumber(this.farmNumber);
+        dto.setFieldName(this.fieldName.stream()
+                .map(FieldName::toDto)
+                .collect(Collectors.toList()));
 
         if(farmDetails!=null) {
             dto.setFarmDetails(this.farmDetails.toDto());
@@ -71,6 +77,12 @@ public class Farm {
 //        dto.setFarmDetails(this.farmDetails.toDto());
 
         return dto;
+    }
+
+
+    public void addFieldName(FieldName fieldName) {
+        this.fieldName.add(fieldName);
+        fieldName.setFarm(this);
     }
 }
 

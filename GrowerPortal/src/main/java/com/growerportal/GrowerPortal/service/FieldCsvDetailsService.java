@@ -10,4 +10,6 @@ public interface FieldCsvDetailsService {
 
     Double findCluCalculatedAcreageByFarmTractClu(
             Long farmNumber, Long tractNumber, Long cluNumber);
+
+    Double getTotalCalculatedAcreageByFarmNumber(Long farmNumber);
 }
