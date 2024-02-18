@@ -58,6 +58,7 @@ public class ProducerInfo {
     private String implementedCsafPractices;
 
     @OneToOne(mappedBy = "producerInfo")
+    @JsonManagedReference
     private Survey survey;
 
     // Standard constructors, getters, and setters

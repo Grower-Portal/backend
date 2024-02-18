@@ -1,5 +1,6 @@
 package com.growerportal.GrowerPortal.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,8 @@ public class Survey {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "producer_info_id", referencedColumnName = "producerInfoId")
+    @JoinColumn(name = "producer_info_id")
+    @JsonBackReference
     private ProducerInfo producerInfo;
 
     private Integer controllingMembersCount;

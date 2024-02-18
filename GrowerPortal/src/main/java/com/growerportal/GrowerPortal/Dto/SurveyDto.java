@@ -26,6 +26,7 @@ public class SurveyDto {
     private Boolean volunteersForEconomicAnalysis;
     private Boolean understandsContractWithSupremeRice;
     private Boolean understandsProhibitionOfDouble;
+    //private Boolean understandsProhibitionOfDoubleFunding; typo this is correct need to change in survey.java as well
     private Boolean understandsPaymentFromSupreme;
     private Boolean hasAuthorityToCompleteApplication;
     // Single file attachments

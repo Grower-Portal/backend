@@ -12,6 +12,7 @@ import com.growerportal.GrowerPortal.repository.ProducerInfoRepository;
 import com.growerportal.GrowerPortal.repository.SurveyRepository;
 import com.growerportal.GrowerPortal.service.SurveyService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +39,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
+    @Transactional
     public Survey saveSurvey(SurveyDto surveyDto) throws IOException {
         Survey survey = new Survey();
 
@@ -59,11 +61,14 @@ public class SurveyServiceImpl implements SurveyService {
         survey.setUnderstandsProhibitionOfDoubleFunding(surveyDto.getUnderstandsProhibitionOfDouble());
         survey.setUnderstandsPaymentFromSupreme(surveyDto.getUnderstandsPaymentFromSupreme());
         survey.setHasAuthorityToCompleteApplication(surveyDto.getHasAuthorityToCompleteApplication());
+
+        survey = surveyRepository.save(survey);
+        mapProducerInfo(surveyDto, survey);
         survey.setCcc860Attachment(saveFileToGCS(surveyDto.getCcc860Attachment(), surveyDto.getProducerInfoId()));
         survey.setMasterFarmerParticipationAttachment(saveFileToGCS(surveyDto.getMasterFarmerParticipationAttachment(), surveyDto.getProducerInfoId()));
         survey.setSrNDAAttachment(saveFileToGCS(surveyDto.getSrNDAAttachment(), surveyDto.getProducerInfoId()));
         survey.setSrAgreementAttachment(saveFileToGCS(surveyDto.getSrAgreementAttachment(), surveyDto.getProducerInfoId()));
-        mapProducerInfo(surveyDto, survey);
+
         return surveyRepository.save(survey);
     }
 
