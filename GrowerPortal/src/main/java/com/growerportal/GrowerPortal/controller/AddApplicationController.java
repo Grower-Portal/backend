@@ -27,7 +27,7 @@ public class AddApplicationController {
     @GetMapping("/{id}")
     public ResponseEntity<AddApplicationDto> getApplicationById(@PathVariable Long id) {
         Optional<AddApplicationDto> applicationDto = addApplicationService.getApplicationById(id);
-        return applicationDto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+      return applicationDto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping

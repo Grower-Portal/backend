@@ -17,9 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class SurveyServiceImpl implements SurveyService {
@@ -72,8 +76,58 @@ public class SurveyServiceImpl implements SurveyService {
         return surveyRepository.save(survey);
     }
 
+    @Override
+    public List<SurveyDto> getSurveysByProducerIdWithDownloadLink(Long producerId) {
+        List<Survey> surveys = surveyRepository.findByProducerInfo_ProducerInfoId(producerId);
+        return surveys.stream()
+                .map(this::mapToSurveyDto)
+                .collect(Collectors.toList());
+    }
 
-    
+    public SurveyDto mapToSurveyDto(Survey survey) {
+        SurveyDto surveyDto = new SurveyDto();
+        surveyDto.setProducerInfoId(survey.getProducerInfo().getProducerInfoId());
+        surveyDto.setControllingMembersCount(survey.getControllingMembersCount());
+        surveyDto.setHasCCC860Certification(survey.getHasCCC860Certification());
+        surveyDto.setMembersContributingToCCC860(survey.getMembersContributingToCCC860());
+        surveyDto.setHasParticipatedInLSUMasterFarmerProgram(survey.getHasParticipatedInLSUMasterFarmerProgram());
+        surveyDto.setMembersParticipatedInLSUMasterFarmerProgram(survey.getMembersParticipatedInLSUMasterFarmerProgram());
+        surveyDto.setHighestDegreeOfParticipationInMasterFarmerProgram(survey.getHighestDegreeOfParticipationInMasterFarmerProgram());
+        surveyDto.setYearsOfExperience(survey.getYearsOfExperience());
+        surveyDto.setFarmedRiceIn2023(survey.getFarmedRiceIn2023());
+        surveyDto.setRiceAcresFarmedIn2023(survey.getRiceAcresFarmedIn2023());
+        surveyDto.setIsFirstYearFarmingRice(survey.getIsFirstYearFarmingRice());
+        surveyDto.setMostRecentYearFarmingRice(survey.getMostRecentYearFarmingRice());
+        surveyDto.setRiceAcresFarmedInMostRecentYear(survey.getRiceAcresFarmedInMostRecentYear());
+        surveyDto.setPercentageOfIncomeFromOnFarmActivities(survey.getPercentageOfIncomeFromOnFarmActivities());
+        surveyDto.setVolunteersForEconomicAnalysis(survey.getVolunteersForEconomicAnalysis());
+        surveyDto.setUnderstandsContractWithSupremeRice(survey.getUnderstandsContractWithSupremeRice());
+        surveyDto.setUnderstandsProhibitionOfDouble(survey.getUnderstandsProhibitionOfDoubleFunding());
+        surveyDto.setUnderstandsPaymentFromSupreme(survey.getUnderstandsPaymentFromSupreme());
+        surveyDto.setHasAuthorityToCompleteApplication(survey.getHasAuthorityToCompleteApplication());
+
+        // Populate URLs for downloading attachments
+        if (survey.getCcc860Attachment() != null)
+            surveyDto.setCcc860AttachmentUrl(constructDownloadUrl(survey.getCcc860Attachment().getGcsFilePath()));
+        if (survey.getMasterFarmerParticipationAttachment() != null)
+            surveyDto.setMasterFarmerParticipationAttachmentUrl(constructDownloadUrl(survey.getMasterFarmerParticipationAttachment().getGcsFilePath()));
+        if (survey.getSrNDAAttachment() != null)
+            surveyDto.setSrNDAAttachmentUrl(constructDownloadUrl(survey.getSrNDAAttachment().getGcsFilePath()));
+        if (survey.getSrAgreementAttachment() != null)
+            surveyDto.setSrAgreementAttachmentUrl(constructDownloadUrl(survey.getSrAgreementAttachment().getGcsFilePath()));
+
+        return surveyDto;
+    }
+
+    private String constructDownloadUrl(String gcsFilePath) {
+        // Construct download URL based on GCS file path
+        // Replace "gs://" with "https://storage.googleapis.com/"
+        return gcsFilePath.replace("gs://", "https://storage.googleapis.com/");
+    }
+
+
+
+
     private void mapProducerInfo(SurveyDto surveyDto, Survey survey) {
         if (surveyDto.getProducerInfoId() != null) {
             ProducerInfo producerInfo = producerInfoRepository.findById(surveyDto.getProducerInfoId())

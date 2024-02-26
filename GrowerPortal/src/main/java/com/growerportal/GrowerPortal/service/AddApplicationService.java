@@ -28,10 +28,16 @@ public class AddApplicationService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<AddApplicationDto> getApplicationById(Long id) {
-        Optional<AddApplication> application = addApplicationRepository.findById(id);
-        return application.map(AddApplication::toDto);
-    }
+    // public Optional<AddApplicationDto> getApplicationById(Long id) {
+    //     Optional<AddApplication> application = addApplicationRepository.findById(id);
+    //     return application.map(AddApplication::toDto);
+    // }
+
+        public  Optional<AddApplicationDto> getApplicationById(Long id) {
+        Optional<AddApplication> applicationOptional = addApplicationRepository.findById(id);
+            // Handle case where application with specified ID is not found
+            return applicationOptional.map(addApplication -> Optional.ofNullable(addApplication.toDto())).orElse(null);
+        }
 
     public AddApplicationDto createApplication(AddApplicationDto applicationDto) {
         if (applicationDto != null) {
@@ -182,6 +188,18 @@ public class AddApplicationService {
             entity.setProducerInfo(producerInfo);
         }
         return entity;
+    }
+
+    public List<AddApplicationDto> getApplicationsByFarmerId(FarmerPersonalInfo farmer) {
+        // Retrieve all applications related to the farmer from the applications table
+        List<AddApplication> farmerApplications = addApplicationRepository.findByFarmerId(4L);
+
+        // Map farmer applications to ApplicationDto
+        List<AddApplicationDto> applicationDtos = farmerApplications.stream()
+                .map(AddApplication::toDto)
+                .collect(Collectors.toList());
+
+        return applicationDtos;
     }
 }
 

@@ -1,10 +1,12 @@
 package com.growerportal.GrowerPortal.service.impl;
 
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
 import com.growerportal.GrowerPortal.dto.LoginResponseDTO;
 import com.growerportal.GrowerPortal.dto.UserInfoDto;
 import com.growerportal.GrowerPortal.entity.FarmerPersonalInfo;
 import com.growerportal.GrowerPortal.repository.FarmerPersonalInfoRepository;
 import com.growerportal.GrowerPortal.repository.RoleRepository;
+import com.growerportal.GrowerPortal.service.AddApplicationService;
 import com.growerportal.GrowerPortal.service.FarmerService;
 import com.growerportal.GrowerPortal.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -39,6 +43,9 @@ public class FarmerServiceImpl implements FarmerService, UserDetailsService {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private AddApplicationService addApplicationService;
+
 
     public FarmerServiceImpl(FarmerPersonalInfoRepository farmerPersonalInfoRepository) {
         this.farmerPersonalInfoRepository = farmerPersonalInfoRepository;
@@ -48,12 +55,19 @@ public class FarmerServiceImpl implements FarmerService, UserDetailsService {
         FarmerPersonalInfo farmer = farmerPersonalInfoRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("No user found with email: %s", email)));
 
+
+
         UserInfoDto userInfoDTO = new UserInfoDto();
         userInfoDTO.setName(String.format("%s %s", farmer.getFirstName(), farmer.getLastName()));
         userInfoDTO.setEmail(farmer.getEmail());
         userInfoDTO.setPhone(farmer.getPhoneNumber());
         userInfoDTO.setAddress(farmer.getAddress());
         userInfoDTO.setDob(farmer.getDob());
+
+
+            // Get applications related to the farmer
+            List<AddApplicationDto> farmerApplications = addApplicationService.getApplicationsByFarmerId(farmer);
+        userInfoDTO.setAddApplicationDto(farmerApplications);
 
         return userInfoDTO;
     }

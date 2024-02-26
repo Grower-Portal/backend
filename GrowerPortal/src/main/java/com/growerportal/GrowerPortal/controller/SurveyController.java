@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/survey")
@@ -25,5 +26,11 @@ public class SurveyController {
     @PostMapping(consumes = {"multipart/form-data"})
     public Survey createSurvey(@ModelAttribute SurveyDto survey) throws IOException {
         return surveyService.saveSurvey(survey);
+    }
+
+
+    @GetMapping("/{producerId}")
+    public List<SurveyDto> getSurveysByProducerIdWithDownloadLink(@PathVariable Long producerId) {
+        return surveyService.getSurveysByProducerIdWithDownloadLink(producerId);
     }
 }

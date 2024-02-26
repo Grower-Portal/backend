@@ -35,6 +35,10 @@ public class SurveyDto {
     private MultipartFile srNDAAttachment;
     private MultipartFile srAgreementAttachment;
 
+    private String ccc860AttachmentUrl;
+    private String masterFarmerParticipationAttachmentUrl;
+    private String srNDAAttachmentUrl;
+    private String srAgreementAttachmentUrl;
 
 
     // Add any additional fields or methods as needed
