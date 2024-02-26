@@ -1,6 +1,6 @@
 package com.growerportal.GrowerPortal.controller;
 
-import com.growerportal.GrowerPortal.Dto.FarmerSignupDto;
+import com.growerportal.GrowerPortal.dto.FarmerSignupDto;
 import com.growerportal.GrowerPortal.entity.FarmerPersonalInfo;
 import com.growerportal.GrowerPortal.service.EmailService;
 import com.growerportal.GrowerPortal.service.FarmerSignupService;

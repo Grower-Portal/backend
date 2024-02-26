@@ -1,10 +1,17 @@
 package com.growerportal.GrowerPortal.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.checkerframework.checker.units.qual.A;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -20,22 +27,37 @@ public class Tract {
     @Column(name = "tract_number", nullable = false)
     private Long tractNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "farmer_id", nullable = false)
-    private FarmerPersonalInfo farmer;
-
-    @ManyToOne
-    @JoinColumn(name = "application_id", nullable = false)
-    private AddApplication application;
-
     @OneToMany(mappedBy = "tract", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Clu> clus;
+    @JsonManagedReference
+    private List<Clu> clus = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "farm_id", nullable = false)
+    @JsonBackReference
     private Farm farm;
 
     // Getters and setters
+// Ensure the clus set is lazily initialized
+//    public Set<Clu> getClus() {
+//        if (clus == null) {
+//            clus = new HashSet<>();
+//        }
+//        return clus;
+//    }
+
+    // Method to add a Clu to the set
+    public void addClu(Clu clu) {
+        getClus().add(clu);
+        clu.setTract(this);
+    }
+
+    public AddApplicationDto.TractDto toDto() {
+        AddApplicationDto.TractDto dto = new AddApplicationDto.TractDto();
+        dto.setTractId(this.tractId);
+        dto.setTractNumber(this.tractNumber);
+        dto.setFarmId(this.farm != null ? this.farm.getFarmId() : null);
+        return dto;
+    }
 }
 
 

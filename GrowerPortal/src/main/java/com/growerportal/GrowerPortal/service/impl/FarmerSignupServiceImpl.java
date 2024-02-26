@@ -1,6 +1,7 @@
 package com.growerportal.GrowerPortal.service.impl;
 
-import com.growerportal.GrowerPortal.Dto.FarmerSignupDto;
+
+import com.growerportal.GrowerPortal.dto.FarmerSignupDto;
 import com.growerportal.GrowerPortal.entity.FarmerPersonalInfo;
 import com.growerportal.GrowerPortal.entity.VerificationToken;
 import com.growerportal.GrowerPortal.repository.FarmerPersonalInfoRepository;

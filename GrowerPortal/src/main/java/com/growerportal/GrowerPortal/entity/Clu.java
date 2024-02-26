@@ -1,4 +1,6 @@
 package com.growerportal.GrowerPortal.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,15 +25,8 @@ public class Clu {
     private String fsaPhysicalLocation;
 
     @ManyToOne
-    @JoinColumn(name = "farmer_id", nullable = false)
-    private FarmerPersonalInfo farmer;
-
-    @ManyToOne
-    @JoinColumn(name = "application_id", nullable = false)
-    private AddApplication application;
-
-    @ManyToOne
     @JoinColumn(name = "tract_id", nullable = false)
+    @JsonBackReference
     private Tract tract;
 
     public Clu() {}
@@ -43,5 +38,15 @@ public class Clu {
     }
 
     // Getters and setters
+
+    public AddApplicationDto.CluDto toDto() {
+        AddApplicationDto.CluDto dto = new AddApplicationDto.CluDto();
+        dto.setCluId(this.cluId);
+        dto.setCluNumber(this.cluNumber);
+        dto.setAcres(this.acres);
+        dto.setFsaPhysicalLocation(this.fsaPhysicalLocation);
+        dto.setTractId(this.tract != null ? this.tract.getTractId() : null);
+        return dto;
+    }
 }
 

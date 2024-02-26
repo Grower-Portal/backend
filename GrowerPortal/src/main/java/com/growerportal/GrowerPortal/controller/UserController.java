@@ -1,6 +1,6 @@
 package com.growerportal.GrowerPortal.controller;
 
-import com.growerportal.GrowerPortal.Dto.UserInfoDto;
+import com.growerportal.GrowerPortal.dto.UserInfoDto;
 import com.growerportal.GrowerPortal.service.FarmerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
