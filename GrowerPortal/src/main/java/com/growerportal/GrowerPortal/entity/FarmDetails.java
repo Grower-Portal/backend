@@ -1,12 +1,11 @@
 package com.growerportal.GrowerPortal.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "farm_details")
 public class FarmDetails {
@@ -15,33 +14,26 @@ public class FarmDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long farmDetailId;
 
-    @ManyToOne
-    @JoinColumn(name = "application_id", nullable = false)
-    private AddApplication application;
-
-    @ManyToOne
-    @JoinColumn(name="farmer_id", nullable = false)
-    private FarmerPersonalInfo farmer;
-
-    @OneToOne(mappedBy = "farmDetails")
-    @JsonManagedReference
+    @OneToOne
+    @JoinColumn(name = "farm_id", nullable = false)
+    @JsonBackReference
     private Farm farm;
 
     // Other fields like applicationAcres, totalLandAreaAcres
     @Column(nullable = false)
-    private Integer applicationAcres;
+    private Double applicationAcres;
 
     @Column(nullable = false)
-    private Integer totalLandAreaAcres;
+    private Double totalLandAreaAcres;
 
     @Column(nullable = false)
-    private Integer totalCroplandAcres;
+    private Double totalCroplandAcres;
 
     @Column(nullable = false)
-    private Integer totalLiveStockAcres;
+    private Double totalLiveStockAcres;
 
     @Column(nullable = false)
-    private Boolean produceLivestock;
+    private String produceLivestock;
 
     @Column
     private String livestockType1;
@@ -62,7 +54,7 @@ public class FarmDetails {
     private Integer livestockHead3;
 
     @Column
-    private Integer totalForestAreaAcres;
+    private Double totalForestAreaAcres;
 
     @Column
     private String fsaPhysicalLocation;
@@ -73,4 +65,30 @@ public class FarmDetails {
     @Column
     private String transitioningToUsdaCertified;
     // Constructors, getters, and setters
+
+
+
+    public AddApplicationDto.FarmDetailsDto toDto() {
+        AddApplicationDto.FarmDetailsDto dto = new AddApplicationDto.FarmDetailsDto();
+        dto.setFarmDetailId(this.farmDetailId);
+        dto.setFarmId(this.farm != null ? this.farm.getFarmId(): null);
+        dto.setApplicationAcres(this.applicationAcres);
+        dto.setTotalLandAreaAcres(this.totalLandAreaAcres);
+        dto.setTotalCroplandAcres(this.totalCroplandAcres);
+        dto.setTotalLiveStockAcres(this.totalLiveStockAcres);
+        dto.setProduceLivestock(this.produceLivestock);
+        dto.setLivestockType1(this.livestockType1);
+        dto.setLivestockHead1(this.livestockHead1);
+        dto.setLivestockType2(this.livestockType2);
+        dto.setLivestockHead2(this.livestockHead2);
+        dto.setLivestockType3(this.livestockType3);
+        dto.setLivestockHead3(this.livestockHead3);
+        dto.setTotalForestAreaAcres(this.totalForestAreaAcres);
+        dto.setFsaPhysicalLocation(this.fsaPhysicalLocation);
+        dto.setPastCsafPractice(this.pastCsafPractice);
+        dto.setTransitioningToUsdaCertified(this.transitioningToUsdaCertified);
+
+
+        return dto;
+    }
 }

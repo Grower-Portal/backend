@@ -1,4 +1,4 @@
-package com.growerportal.GrowerPortal.Dto;
+package com.growerportal.GrowerPortal.dto;
 
 
 import lombok.AllArgsConstructor;

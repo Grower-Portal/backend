@@ -1,6 +1,6 @@
 package com.growerportal.GrowerPortal.controller;
 
-import com.growerportal.GrowerPortal.entity.Farm;
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
 import com.growerportal.GrowerPortal.service.FarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,35 +20,30 @@ public class FarmController {
         this.farmService = farmService;
     }
 
-    // Define endpoint for fetching a list of all farms
     @GetMapping
-    public ResponseEntity<List<Farm>> getAllFarms() {
-        List<Farm> farms = farmService.getAllFarms();
-        return ResponseEntity.ok(farms);
+    public ResponseEntity<List<AddApplicationDto.FarmDto>> getAllFarms() {
+        List<AddApplicationDto.FarmDto> farmDtos = farmService.getAllFarms();
+        return ResponseEntity.ok(farmDtos);
     }
 
-    // Define endpoint for fetching a specific farm by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Farm> getFarmById(@PathVariable Long id) {
-        Farm farm = farmService.getFarmById(id);
-        return ResponseEntity.ok(farm);
+    public ResponseEntity<AddApplicationDto.FarmDto> getFarmById(@PathVariable Long id) {
+        AddApplicationDto.FarmDto farmDto = farmService.getFarmById(id);
+        return ResponseEntity.ok(farmDto);
     }
 
-    // Define endpoint for creating a new farm
     @PostMapping
-    public ResponseEntity<Farm> createFarm(@RequestBody Farm farm) {
-        Farm createdFarm = farmService.createFarm(farm);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdFarm);
+    public ResponseEntity<AddApplicationDto.FarmDto> createFarm(@RequestBody AddApplicationDto.FarmDto farmDto) {
+        AddApplicationDto.FarmDto createdFarmDto = farmService.createFarm(farmDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdFarmDto);
     }
 
-    // Define endpoint for updating an existing farm
     @PutMapping("/{id}")
-    public ResponseEntity<Farm> updateFarm(@PathVariable Long id, @RequestBody Farm farm) {
-        Farm updatedFarm = farmService.updateFarm(id, farm);
-        return ResponseEntity.ok(updatedFarm);
+    public ResponseEntity<AddApplicationDto.FarmDto> updateFarm(@PathVariable Long id, @RequestBody AddApplicationDto.FarmDto farmDto) {
+        AddApplicationDto.FarmDto updatedFarmDto = farmService.updateFarm(id, farmDto);
+        return ResponseEntity.ok(updatedFarmDto);
     }
 
-    // Define endpoint for deleting a farm by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFarm(@PathVariable Long id) {
         farmService.deleteFarm(id);

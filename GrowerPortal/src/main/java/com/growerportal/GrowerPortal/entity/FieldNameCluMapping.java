@@ -1,5 +1,6 @@
 package com.growerportal.GrowerPortal.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,11 +15,8 @@ public class FieldNameCluMapping {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "field_name_id_mapping", nullable = false)
-    private FieldName fieldNameMapping;
-
-    @ManyToOne
     @JoinColumn(name = "field_name_id", nullable = false)
+    @JsonBackReference
     private FieldName fieldName;
 
     @Column(name = "farm_number", nullable = false)

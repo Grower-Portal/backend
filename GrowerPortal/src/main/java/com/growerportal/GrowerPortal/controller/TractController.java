@@ -1,6 +1,6 @@
 package com.growerportal.GrowerPortal.controller;
 
-import com.growerportal.GrowerPortal.entity.Tract;
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
 import com.growerportal.GrowerPortal.service.TractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/tracts") // Define the base URL for tract-related endpoints
 public class TractController {
-
     private final TractService tractService;
 
     @Autowired
@@ -20,35 +19,30 @@ public class TractController {
         this.tractService = tractService;
     }
 
-    // Define endpoint for fetching a list of all tracts
     @GetMapping
-    public ResponseEntity<List<Tract>> getAllTracts() {
-        List<Tract> tracts = tractService.getAllTracts();
-        return ResponseEntity.ok(tracts);
+    public ResponseEntity<List<AddApplicationDto.TractDto>> getAllTracts() {
+        List<AddApplicationDto.TractDto> tractDtos = tractService.getAllTracts();
+        return ResponseEntity.ok(tractDtos);
     }
 
-    // Define endpoint for fetching a specific tract by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Tract> getTractById(@PathVariable Long id) {
-        Tract tract = tractService.getTractById(id);
-        return ResponseEntity.ok(tract);
+    public ResponseEntity<AddApplicationDto.TractDto> getTractById(@PathVariable Long id) {
+        AddApplicationDto.TractDto tractDto = tractService.getTractById(id);
+        return ResponseEntity.ok(tractDto);
     }
 
-    // Define endpoint for creating a new tract
     @PostMapping
-    public ResponseEntity<Tract> createTract(@RequestBody Tract tract) {
-        Tract createdTract = tractService.createTract(tract);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTract);
+    public ResponseEntity<AddApplicationDto.TractDto> createTract(@RequestBody AddApplicationDto.TractDto tractDto) {
+        AddApplicationDto.TractDto createdTractDto = tractService.createTract(tractDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTractDto);
     }
 
-    // Define endpoint for updating an existing tract
     @PutMapping("/{id}")
-    public ResponseEntity<Tract> updateTract(@PathVariable Long id, @RequestBody Tract tract) {
-        Tract updatedTract = tractService.updateTract(id, tract);
-        return ResponseEntity.ok(updatedTract);
+    public ResponseEntity<AddApplicationDto.TractDto> updateTract(@PathVariable Long id, @RequestBody AddApplicationDto.TractDto tractDto) {
+        AddApplicationDto.TractDto updatedTractDto = tractService.updateTract(id, tractDto);
+        return ResponseEntity.ok(updatedTractDto);
     }
 
-    // Define endpoint for deleting a tract by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTract(@PathVariable Long id) {
         tractService.deleteTract(id);

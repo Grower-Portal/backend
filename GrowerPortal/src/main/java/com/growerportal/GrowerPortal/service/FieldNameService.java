@@ -1,13 +1,14 @@
 package com.growerportal.GrowerPortal.service;
 
-import com.growerportal.GrowerPortal.entity.FieldName;
+import com.growerportal.GrowerPortal.dto.AddApplicationDto;
+
 import java.util.List;
 
 public interface FieldNameService {
-    List<FieldName> getAllFieldNames();
-    FieldName getFieldNameById(Long id);
-    FieldName createFieldName(FieldName fieldName);
-    FieldName updateFieldName(Long id, FieldName fieldName);
+    List<AddApplicationDto.FieldNameDto> getAllFieldNames();
+    AddApplicationDto.FieldNameDto getFieldNameById(Long id);
+    AddApplicationDto.FieldNameDto createFieldName(AddApplicationDto.FieldNameDto fieldNameDto);
+    AddApplicationDto.FieldNameDto updateFieldName(Long id, AddApplicationDto.FieldNameDto fieldNameDto);
     void deleteFieldName(Long id);
 }
 
